@@ -29,5 +29,6 @@
     <em:optionsType></em:optionsType>
     <em:optionsURL></em:optionsURL>
     <em:updateURL></em:updateURL>
+    <em:updateKey></em:updateKey>
   </Description>
 </RDF>
