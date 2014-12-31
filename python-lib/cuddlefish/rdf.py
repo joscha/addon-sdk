@@ -121,7 +121,8 @@ class RDFManifest(RDF):
 
 
 def gen_manifest(template_root_dir, target_cfg, jid, harness_options={},
-                 update_url=None, bootstrap=True, enable_mobile=False):
+                 update_url=None, bootstrap=True, enable_mobile=False
+                 update_key=None):
     install_rdf = os.path.join(template_root_dir, "install.rdf")
     manifest = RDFManifest(install_rdf)
     dom = manifest.dom
@@ -198,6 +199,11 @@ def gen_manifest(template_root_dir, target_cfg, jid, harness_options={},
         manifest.set("em:updateURL", update_url)
     else:
         manifest.remove("em:updateURL")
+
+    if update_key:
+        manifest.set("em:updateKey", update_key)
+    else:
+        manifest.remove("em:updateKey")
 
     if target_cfg.get("preferences"):
         manifest.set("em:optionsType", "2")
