@@ -59,6 +59,11 @@ parser_groups = (
                                       metavar=None,
                                       default=None,
                                       cmds=['xpi'])),
+        (("", "--update-key",), dict(dest="update_key",
+                                      help="update key in install.rdf",
+                                      metavar=None,
+                                      default=None,
+                                      cmds=['xpi'])),
         (("-p", "--profiledir",), dict(dest="profiledir",
                                        help=("profile directory to pass to "
                                              "app"),
@@ -860,13 +865,14 @@ def run(arguments=sys.argv[1:], target_cfg=None, pkg_cfg=None,
                                 target_cfg=target_cfg,
                                 jid=jid,
                                 update_url=options.update_url,
+                                update_key=options.update_key,
                                 bootstrap=True,
                                 enable_mobile=options.enable_mobile,
                                 harness_options=harness_options)
 
     if command == "xpi" and options.update_link:
-        if not options.update_link.startswith("https"):
-            raise optparse.OptionValueError("--update-link must start with 'https': %s" % options.update_link)
+        if not options.update_link.startswith("https") and not options.update_key:
+            raise optparse.OptionValueError("--update-link must start with 'https' if no update key given: %s" % options.update_link)
         rdf_name = UPDATE_RDF_FILENAME % target_cfg.name
         print >>stdout, "Exporting update description to %s." % rdf_name
         update = RDFUpdate()
